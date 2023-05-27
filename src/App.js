@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+
+// import { useState } from 'react';
+// import './App.css';
+// import { Button, TextField, Typography } from '@mui/material';
+// import axios from 'axios';
+import AppRouter from './config/router';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+  // const obj = {
+  //   firstName,
+  //   LastName,
+  //   contact,
+  //   Email,
+  //   password,
+  //   Course
+  // }
+  // const GetData = () => {
+  //   axios.get("http://localhost:7000/api/studentRouter")
+  //   .then((res) => console.log(res.data))
+  //   .catch((err) => console.log(err))
+  // }
+
+  return (<>
+  <AppRouter />
+    {/* <Button onClick={() => GetData()}>GET DATA</Button> */}
+    
+  </>
   );
 }
 
