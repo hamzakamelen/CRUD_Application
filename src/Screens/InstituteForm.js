@@ -1,6 +1,7 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function InstituteForm() {
     const Backend = "http://localhost:7000/api/instituteRouter";
@@ -22,22 +23,27 @@ function InstituteForm() {
          contact,
          InstituteLocation
      }
+     let navigate = useNavigate()
+
      const Submit = () => {
          axios.post(Backend, InstituteData)
-             .then((res) => console.log(res.data))
+             .then((res) => {console.log(res.data)
+                navigate('/InstituteData')
+            })
              .catch((err) => console.log(err))
      }
     return (
         <>
 
-            <Button onClick={() => GetData()}>GET DATA</Button>
-            <div className='Student'>
-                <Typography variant='h3'>Institute</Typography>
-                <TextField label="Institute Name" onChange={(e) => setInstituteName(e.target.value)} /><br />
-                <TextField label="Short Name" onChange={(e) => setShortName(e.target.value)} /><br />
-                <TextField label="Contact" onChange={(e) => setcontact(e.target.value)} /><br />
-                <TextField label="InstituteLocation" onChange={(e) => setInstituteLocation(e.target.value)} /><br />
-                <Button onClick={() => Submit()}>Submit</Button>
+            <div className='Institute'>
+            <Box marginLeft={50} borderRadius={20} marginTop={7} padding={20} boxShadow={17} width={400} height={350}>
+                    <Typography fontStyle="inherit" marginTop={-13} variant='h2' textAlign="center" fontFamily="monospace">Institute</Typography> <br />
+                    <TextField label="Institute Name" sx={{ marginBottom: "2em", width: "35em", marginLeft: "-5em" }} onChange={(e) => setInstituteName(e.target.value)} />
+                    <TextField label="Short Name" sx={{ marginBottom: "2em", width: "35em", marginLeft: "-5em" }} onChange={(e) => setShortName(e.target.value)} />
+                    <TextField label="InstituteLocation" sx={{ marginBottom: "2em", width: "35em", marginLeft: "-5em" }} onChange={(e) => setInstituteLocation(e.target.value)} />
+                    <TextField label="Contact" sx={{ marginBottom: "2em", width: "35em", marginLeft: "-5em" }} onChange={(e) => setcontact(e.target.value)} />
+                    <Button variant="contained" color="primary" sx={{ fontWeight: "bold", fontSize: "1.2em", marginLeft: "-1em", borderRadius: "10px", width: "22em" }} onClick={() => Submit()}>Submit</Button>
+                </Box>
                 </div>
             </>
             )
