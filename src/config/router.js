@@ -7,7 +7,9 @@ import StudentData from '../Screens/StudentData'
 import InstituteData from '../Screens/InstituteData'
 import CourseData from '../Screens/CourseData'
 import TeacherData from '../Screens/TeacherData'
-import Err404 from '../Err404'
+import Err404 from '../Screens/PublicRoute/Err404'
+import Signup from '../Screens/PublicRoute/Signup'
+import Login from '../Screens/PublicRoute/Login'
 function AppRouter(){
     return(
         <BrowserRouter>
@@ -31,6 +33,8 @@ function AppRouter(){
 
                 {/* ***********Public***************** */}
                 <Route path="*" element={<Err404 />} />
+                <Route path="Login" element={<Login />} />
+                <Route path="Signup" element={<Signup />} />
                 {/* ************************************** */}
             </Routes>
         </BrowserRouter>
