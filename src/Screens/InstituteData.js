@@ -10,6 +10,9 @@ function InstituteData() {
     const [data, setData] = useState([]);
     const [editDialogOpen, setEditDialogOpen] = useState(false);
     const [editData, setEditData] = useState({});
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(5); // Default limit is 5
+    const [totalPages, setTotalPages] = useState(0); // Total number of pages
     const Backend = "http://localhost:7000/api/instituteRouter";
 
     const openEditDialog = (student) => {
@@ -60,21 +63,35 @@ function InstituteData() {
                 console.log(err);
             });
     };
-
-    const GetData = () =>{
-    axios
-            .get(Backend)
+    const GetData = () => {
+        axios
+            .get(`${Backend}?page=${page}&limit=${limit}`)
             .then((res) => {
                 console.log(res.data);
-                setData(res.data.data);
+                const { data, totalPages } = res.data;
+                setData(data);
+                setTotalPages(totalPages);
             })
-            .catch((err)=>console.log(err));
-        }
+            .catch((err) => console.log(err));
+    };
 
-        useEffect(()=>{
-            GetData()
-        },[])
-        let navigate = useNavigate()
+    useEffect(() => {
+        GetData();
+    }, [page, limit]);
+
+    let navigate = useNavigate();
+
+    const PreviousPage = () => {
+        setPage((prevPage) => prevPage - 1);
+    };
+
+    const NextPage = () => {
+        setPage((prevPage) => prevPage + 1);
+    };
+
+    const LimitChanger = (e) => {
+        setLimit(parseInt(e.target.value));
+    };
     return (
         <div>
              <Box>
@@ -86,7 +103,16 @@ function InstituteData() {
                     <Typography marginLeft={110} fontWeight="bold" fontSize={27} marginTop={-5}>Institute Location</Typography>
                     <Typography marginLeft={160} fontWeight="bold" fontSize={27} marginTop={-5.2}>Contact</Typography>
                 </Box>
-                <Button onClick={() => { navigate('/InstituteForm') }} variant="contained" sx={{ borderRadius: "20px", fontWeight: "bold", color: "whitesmoke", fontSize: "16px", marginLeft: "87em", marginTop: "0.8em", marginBottom: "0.8em" }} color="success" ><AddIcon />New</Button>
+                <TextField
+                sx={{marginTop:"1em",marginBottom:"1em",marginLeft:"3em",width:"4em"}}
+                type="number"
+                label="Items Per Page"
+                value={limit}
+                onChange={LimitChanger}
+            />
+                <Button onClick={() => { navigate('/InstituteForm') }}
+                 variant="contained" sx={{ borderRadius: "20px", fontWeight: "bold",
+                  color: "whitesmoke", fontSize: "16px",marginTop:"1.3em", marginLeft: "80em", marginBottom: "0.8em" }} color="success" ><AddIcon />New</Button>
                 {data.map((x, i) => (
                     <Box borderRadius={3} marginBottom={2} marginLeft={5} key={i} padding={4} sx={{ boxShadow: "7" }} width={1400} height={27} component='div'>
                         <Typography marginLeft={-1} marginTop={-2} variant="h6">{x.InstituteName }</Typography>
@@ -96,21 +122,9 @@ function InstituteData() {
                         <Button fontWeight="bold" sx={{ borderRadius: "22px", marginRight: "6px" }} onClick={() => openEditDialog(x)} variant="outlined" color="primary"><EditIcon /></Button>
                         <Button fontWeight="bold" sx={{ borderRadius: "22px" }} onClick={() => handleDelete(x._id)} variant="outlined" color="error"><DeleteIcon /></Button>
                     </Box>
+                    
                 ))}
             </Box>
-            {/* <Button onClick ={()=>{navigate('/InstituteForm')}}>Create</Button>
-             {data.map((x, i) => (
-                <ul key={i}>
-                    <Box border={1} width={150}>
-                        <li>{x.InstituteName}</li>
-                        <li>{x.ShortName}</li>
-                        <li>{x.InstituteLocation}</li>
-                        <li>{x.contact}</li>
-                        <Button onClick={() => openEditDialog(x)}>Edit</Button>
-                        <Button onClick={() => handleDelete(x._id)}>Delete</Button>
-                    </Box>
-                </ul>
-            ))} */}
 
             <Dialog open={editDialogOpen} onClose={closeEditDialog}>
                 <DialogTitle>Edit Institute</DialogTitle>
@@ -151,6 +165,13 @@ function InstituteData() {
                     <Button onClick={saveEditData}>Save</Button>
                 </DialogActions>
             </Dialog>
+            <Button onClick={PreviousPage} disabled={page === 1}>
+                Previous Page
+            </Button>
+            <Typography marginLeft={2} fontWeight="bold" fontFamily="monospace" fontSize={20}>{page}/{totalPages}</Typography>
+            <Button onClick={NextPage} disabled={page === totalPages}>
+                Next Page
+            </Button>
         </div>
     );
 }

@@ -1,8 +1,8 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Box, Button, IconButton, InputAdornment, TextField, Typography } from '@mui/material'
+import { Box, Button, IconButton, InputAdornment, Table, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material'
 import axios from 'axios';
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const Backend = "http://localhost:7000/api/UserRouter/signup";
@@ -47,7 +47,7 @@ const Signup = () => {
       } else if (e.target.name === 'password') {
         setPassword(e.target.value);
       }
-    };
+    }; 
   return (
     <div className='Signup'>
       <Box marginLeft={50} borderRadius={20} marginTop={7} padding={20} boxShadow={17} width={400} height={220}>
@@ -75,6 +75,7 @@ const Signup = () => {
             ),
           }}
         />
+        <Typography marginTop={-3} marginLeft={-6} marginBottom={5} fontSize={18} fontFamily='inherit'>Already have an Account? <Link to='Login'>Login</Link></Typography>
         {Error && <Typography sx={{marginBottom:"10px",marginLeft:"-3em",marginTop:"-12px"}} fontSize={20} color="error">Error:  {Error}</Typography>} 
         <Button variant="contained" color="primary" sx={{ fontWeight: "bold", fontSize: "1.2em", marginLeft: "-1em", borderRadius: "10px", width: "22em" }} onClick={() => Submit()}>Submit</Button>
       </Box>

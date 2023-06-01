@@ -10,6 +10,9 @@ function CourseData() {
     const [data, setData] = useState([]);
     const [editDialogOpen, setEditDialogOpen] = useState(false);
     const [editData, setEditData] = useState({});
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(5); // Default limit is 5
+    const [totalPages, setTotalPages] = useState(0); // Total number of pages
     const Backend = "http://localhost:7000/api/CourseRouter";
 
     const openEditDialog = (student) => {
@@ -61,20 +64,35 @@ function CourseData() {
             });
     };
 
-    const GetData = () =>{
-    axios
-            .get(Backend)
+    const GetData = () => {
+        axios
+            .get(`${Backend}?page=${page}&limit=${limit}`)
             .then((res) => {
                 console.log(res.data);
-                setData(res.data.data);
+                const { data, totalPages } = res.data;
+                setData(data);
+                setTotalPages(totalPages);
             })
-            .catch((err)=>console.log(err));
-        }
+            .catch((err) => console.log(err));
+    };
 
-        useEffect(()=>{
-            GetData()
-        },[])
-        let navigate = useNavigate()
+    useEffect(() => {
+        GetData();
+    }, [page, limit]);
+
+    let navigate = useNavigate();
+
+    const PreviousPage = () => {
+        setPage((prevPage) => prevPage - 1);
+    };
+
+    const NextPage = () => {
+        setPage((prevPage) => prevPage + 1);
+    };
+
+    const LimitChanger = (e) => {
+        setLimit(parseInt(e.target.value));
+    };
     return (
         <div>
     <Box>
@@ -86,7 +104,16 @@ function CourseData() {
                     <Typography marginLeft={110} fontWeight="bold" fontSize={27} marginTop={-5}>Duration</Typography>
                     <Typography marginLeft={160} fontWeight="bold" fontSize={27} marginTop={-5.2}>Fees</Typography>
                 </Box>
-                <Button onClick={() => { navigate('/CourseForm') }} variant="contained" sx={{ borderRadius: "20px", fontWeight: "bold", color: "whitesmoke", fontSize: "16px", marginLeft: "87em", marginTop: "0.8em", marginBottom: "0.8em" }} color="success" ><AddIcon />New</Button>
+                <TextField
+                sx={{marginTop:"1em",marginBottom:"1em",marginLeft:"3em",width:"4em"}}
+                type="number"
+                label="Items Per Page"
+                value={limit}
+                onChange={LimitChanger}
+            />
+                <Button onClick={() => { navigate('/CourseForm') }}
+                 variant="contained" sx={{ borderRadius: "20px", fontWeight: "bold",
+                  color: "whitesmoke", fontSize: "16px",marginTop:"1.3em", marginLeft: "80em", marginBottom: "0.8em" }} color="success" ><AddIcon />New</Button>
                 {data.map((x, i) => (
                     <Box borderRadius={3} marginBottom={2} marginLeft={5} key={i} padding={4} sx={{ boxShadow: "7" }} width={1400} height={27} component='div'>
                         <Typography marginLeft={1} marginTop={-2} variant="h6">{x.Name}</Typography>
@@ -138,6 +165,13 @@ function CourseData() {
                     <Button onClick={saveEditData}>Save</Button>
                 </DialogActions>
             </Dialog>
+            <Button onClick={PreviousPage} disabled={page === 1}>
+                Previous Page
+            </Button>
+            <Typography marginLeft={2} fontWeight="bold" fontFamily="monospace" fontSize={20}>{page}/{totalPages}</Typography>
+            <Button onClick={NextPage} disabled={page === totalPages}>
+                Next Page
+            </Button>
         </div>
     );
 }

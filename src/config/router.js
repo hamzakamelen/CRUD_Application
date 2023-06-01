@@ -14,8 +14,6 @@ function AppRouter(){
     return(
         <BrowserRouter>
             <Routes>
-            <Route path='/' element={<StudentData />} />
-
                 {/* ***********Forms*************** */}
                 <Route path='CourseForm' element={<CourseForm />} />
                 <Route path='InstituteForm' element={<InstituteForm />} />
@@ -34,6 +32,7 @@ function AppRouter(){
                 {/* ***********Public***************** */}
                 <Route path="*" element={<Err404 />} />
                 <Route path="Login" element={<Login />} />
+                <Route path="/" element={<Login />} />
                 <Route path="Signup" element={<Signup />} />
                 {/* ************************************** */}
             </Routes>
