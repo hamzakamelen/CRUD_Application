@@ -49,16 +49,6 @@ function StudentForm() {
                 <Button variant="contained" color="primary" sx={{fontWeight:"bold",fontSize:"1.2em",marginLeft:"-1em",borderRadius:"10px", width:"22em" }} onClick={() => Submit()}>Submit</Button>
                 </Box>
                 </div>   
-            {/* <div className='Student'>
-      <Typography variant='h3'>Students</Typography>
-      <TextField label="First Name" onChange={(e) => setfirstName(e.target.value)} /><br />
-      <TextField label="Last Name" onChange={(e) => setLastName(e.target.value)} /><br />
-      <TextField label="Contact" onChange={(e) => setcontact(e.target.value)} /><br />
-      <TextField label="Email" onChange={(e) => setEmail(e.target.value)} /><br />
-      <TextField label="password" onChange={(e) => setpassword(e.target.value)} /><br />
-      <TextField label="Course" onChange={(e) => setCourse(e.target.value)} />
-      <Button onClick={() => Submit()}>Submit</Button>
-    </div>   */}
         </>
     )
 }

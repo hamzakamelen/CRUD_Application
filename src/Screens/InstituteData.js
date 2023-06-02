@@ -82,11 +82,11 @@ function InstituteData() {
     let navigate = useNavigate();
 
     const PreviousPage = () => {
-        setPage((prevPage) => prevPage - 1);
+        setPage((currentPage) => currentPage - 1);
     };
-
+    
     const NextPage = () => {
-        setPage((prevPage) => prevPage + 1);
+        setPage((currentPage) => currentPage + 1);
     };
 
     const LimitChanger = (e) => {
