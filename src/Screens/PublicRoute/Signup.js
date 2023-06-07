@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
-  const Backend = "http://localhost:7000/api/UserRouter/signup";
+  const Backend = "https://amused-headscarf-pike.cyclic.app//api/UserRouter/signup";
   let navigate = useNavigate()
   const [userName, setuserName] = useState("");
   const [email, setemail] = useState("");

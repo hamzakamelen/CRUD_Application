@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function StudentForm() {
-    const Backend = "http://localhost:7000/api/studentRouter";
+    const Backend = "https://amused-headscarf-pike.cyclic.app//api/studentRouter";
     //GET DATA
     const GetData = () => {
         axios.get(Backend)

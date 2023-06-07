@@ -13,7 +13,7 @@ function StudentData() {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(5); // Default limit is 5
     const [totalPages, setTotalPages] = useState(0); // Total number of pages
-    const Backend = "http://localhost:7000/api/studentRouter";
+    const Backend = "https://amused-headscarf-pike.cyclic.app//api/studentRouter";
 
     const openEditDialog = (student) => {
         setEditData(student);

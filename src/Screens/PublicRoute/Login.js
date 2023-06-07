@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Signup from './Signup';
 
 const Login = () => {
-  const Backend = "http://localhost:7000/api/UserRouter/login";
+  const Backend = "https://amused-headscarf-pike.cyclic.app//api/UserRouter/login";
   let navigate = useNavigate()
   const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
